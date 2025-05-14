@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: k8s-app-25
+spec:
+  containers:
+  - name: k8s-app-25
+    image: w1a2n3o4/k8s-app-25:latest
+    ports:
+    - containerPort: 80

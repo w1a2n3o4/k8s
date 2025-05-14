@@ -1,0 +1,6 @@
+# Default Values for my Helm Chart
+
+container:
+  image: w1a2n3o4/k8s-app-25:latest
+
+replicaCount: 3 

@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: neliub-deploy-test
+  labels:
+    app : my-k8s-test-v2
+spec:
+  selector:
+    matchLabels:
+      project: tst
+  template:
+    metadata:
+      labels:
+        project: tst
+    spec:
+      containers:
+        - name : tst-web
+          image: k8s-app-25-v2:latest
+          ports:
+            - containerPort: 80

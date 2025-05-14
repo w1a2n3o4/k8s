@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: neliub-deploy-test-replication
+  labels:
+    app : my-k8s-test-replication
+    env : prod
+    owner: ivan_neliub
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      project: tomcat-rp
+  template:
+    metadata:
+      labels:
+        project: tomcat-rp
+    spec:
+      containers:
+        - name : tomcat-web
+          image: tomcat:8.5.38
+          ports:
+            - containerPort: 8080

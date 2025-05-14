@@ -1,0 +1,15 @@
+apiVersion: storage.kubestash.com/v1alpha1
+kind: BackupStorage
+metadata:
+  name: s3-storage
+  #namespace: stash
+spec:
+  backend:
+    s3:
+      endpoint: https://s3-minsk.becloud.by # или custom-endpoint для MinIO
+      bucket: kubestash
+      region: minsk
+      prefix: kubestash-backups
+      credentials:
+        accessKeyID: 6bbab4d17c40f8bc0f1e
+        secretAccessKey: Z+UEDryKcvnsl6GPgycZL6TAxjnQqVr2HzCaCXoc

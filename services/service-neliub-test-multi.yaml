@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: neliub-svc-test-multi
+  labels:
+    app: neliub-svc-test-multi
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      project: neliub-svc-multi #Service will look for those PODS Labels
+  template:
+    metadata:
+      labels:
+        project: neliub-svc-multi
+    spec:
+      containers:
+         - name: svc-web-multi-1
+           image: nginx:latest
+           ports:
+             - containerPort: 80 #Port on POD
+
+         - name: svc-web-multi-2
+           image: tomcat:8.5.38
+           ports:
+             - containerPort: 8080 #Port on POD
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-svc-neliub-multi
+  labels:
+    enc: prod
+    owner: neliub_ivan
+spec:
+  selector:
+    project: neliub-svc #Selecting PODS with those Labels
+  ports:
+    - name: app-listener-1      
+      protocol: TCP
+      port: 80 #Port on Load Balancer
+      targetPort: 80 #Port on POD
+    - name: app-listener-2
+      protocol: TCP
+      port: 8888
+      targetPort: 8080
+  type: NodePort # Или ClusterIP/LoadBalancer/NodePort, если нужно

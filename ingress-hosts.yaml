@@ -1,0 +1,31 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-hosts
+
+spec:
+  rules:
+  - host: k8s1.neliub.ru
+    http:
+      paths:
+        - serviceName: k8s1-neliub
+          servicePort: 80
+
+  - host: k8s2.neliub.ru
+    http:
+      paths:
+        - serviceName: k8s2-neliub
+          servicePort: 80
+
+  - host: k8s3.neliub.ru
+    http:
+      paths:
+        - serviceName: k8s3-neliub
+          servicePort: 80
+
+  - host: k8s4.neliub.ru
+    http:
+      paths:
+        - serviceName: k8s4-neliub
+          servicePort: 80
+

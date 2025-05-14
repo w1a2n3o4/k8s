@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-autscl
+  namespace: argocd
+  labels:
+    app: {{ .Release.Name }}-autscl
+spec:
+  selector:
+    matchLabels:
+      project: {{ .Release.Name }} #Service will look for those PODS Labels
+  template:
+    metadata:
+      labels:
+        project: {{ .Release.Name }}
+    spec:
+      containers:
+         - name: {{ .Release.Name }}-autcsl
+           image: {{ .Values.container.image }}
+           ports:
+             - containerPort: 8080
