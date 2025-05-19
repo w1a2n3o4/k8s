@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: neliub-svc-test-as
+  name: svc-wordpress
   labels:
-    app: neliub-svc-test-as
+    app: svc-wordpress
 spec:
   selector:
     matchLabels:
-      project: neliub-svc-as #Service will look for those PODS Labels
+      project: svc-wordpress #Service will look for those PODS Labels
   template:
     metadata:
       labels:
-        project: neliub-svc-as
+        project: svc-wordpress
     spec:
       containers:
-         - name: my-k8s-app-v2
-           image: w1a2n3o4/k8s-app-25-v2:latest
+         - name: wordpress
+           image: wordpress:php8.3-fpm-alpine
            ports:
              - containerPort: 80
 
@@ -24,12 +24,12 @@ spec:
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: neliub-svc-as
+  name: svc-wordpress
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: neliub-svc-test-as
+    name: svc-wordpress
   minReplicas: 5
   maxReplicas: 10
   metrics:
@@ -38,28 +38,28 @@ spec:
       name: cpu
       target:
         type: Utilization
-        averageUtilization: 90
+        averageUtilization: 95
   - type: Resource
     resource:
       name: memory
       target:
         type: Utilization
-        averageUtilization: 90
+        averageUtilization: 95
 
 ---
 
 apiVersion: v1
 kind: Service
 metadata:
-  name: my-svc-neliub-as
+  name: svc-wordpress
   labels:
     enc: prod
     owner: neliub_ivan
 spec:
   selector:
-    project: neliub-svc-as #Selecting PODS with those Labels
+    project: svc-wordpress #Selecting PODS with those Labels
   ports:
-    - name: app-listener-as      
+    - name: svc-wordpress      
       protocol: TCP
       port: 80 #Port on Load Balancer
       targetPort: 80 #Port on POD
