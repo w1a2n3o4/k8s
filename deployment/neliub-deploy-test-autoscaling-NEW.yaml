@@ -7,7 +7,6 @@ metadata:
     env : prod
     owner: ivan_neliub
 spec:
-  replicas: 5
   selector:
     matchLabels:
       project: as-rp
@@ -32,9 +31,9 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: my-autoscaling
-  minReplicas: 2
-  maxReplicas: 8
+    name: neliub-deploy-test-autoscaling
+  minReplicas: 10
+  maxReplicas: 20
   metrics:
   - type: Resource
     resource:
