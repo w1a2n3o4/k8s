@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: neliub-cregistry
+  labels:
+    app: neliub-cregistry
+spec:
+  selector:
+    matchLabels:
+      project: neliub-cregistry #Service will look for those PODS Labels
+  template:
+    metadata:
+      labels:
+        project: neliub-cregistry
+    spec:
+      containers:
+         - name: cregistry-neliub
+           image: cregistry.g-cloud.by/neliub-test/neliub-test-new:latest
+           ports:
+             - containerPort: 80
+
+---
+
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: neliub-cregistry
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: neliub-cregistry
+  minReplicas: 5
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 90
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 90
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: neliub-cregistry
+  labels:
+    enc: prod
+    owner: neliub_ivan
+spec:
+  selector:
+    project: neliub-cregistry #Selecting PODS with those Labels
+  ports:
+    - name: neliub-cregistry      
+      protocol: TCP
+      port: 80 #Port on Load Balancer
+      targetPort: 80 #Port on POD
+  type: ClusterIP # Или LoadBalancer/NodePort, если нужно
