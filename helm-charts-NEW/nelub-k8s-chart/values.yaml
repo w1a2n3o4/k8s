@@ -1,0 +1,9 @@
+# Default Values for my Helm Chart
+
+container:
+  image: w1a2n3o4/k8s-app-25-v2:latest
+
+#container:
+#  image: nginx:latest
+
+replicaCount: 3 
