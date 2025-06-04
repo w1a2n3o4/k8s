@@ -1,0 +1,6 @@
+configInline:
+  address-pools:
+   - name: default
+     protocol: layer2
+     addresses:
+     - 10.200.200.100-10.200.200.120  # Замените на ваш диапазон IP
