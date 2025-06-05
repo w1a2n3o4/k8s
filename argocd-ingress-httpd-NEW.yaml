@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-httpd
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: / 
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: k8s.neliub.ru
+    http:
+      paths:
+      - path: /httpd-one/
+        pathType: Prefix
+        backend:
+          service:
+            name: http-indgress-one-service-httpd-one
+            port:
+              number: 80
+      - path: /httpd-two/
+        pathType: Prefix
+        backend:
+          service:
+            name: http-indgress-two-service-httpd-two
+            port:
+              number: 80

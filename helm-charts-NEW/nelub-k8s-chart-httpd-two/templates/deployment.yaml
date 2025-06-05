@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-test-httpd-two
+  labels:
+    app : {{ .Release.Name }}-k8s-test-httpd-two
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      project: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        project: {{ .Release.Name }}
+    spec:
+      containers:
+        - name : {{ .Release.Name }}-httpd-two
+          image: {{ .Values.container.image }}
+          ports:
+            - containerPort: 80

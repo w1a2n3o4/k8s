@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: argocd-ingress-new
+  namespace: argocd  # Если ArgoCD установлен в другом namespace, укажите его
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"  # ArgoCD по умолчанию использует HTTPS
+    nginx.ingress.kubernetes.io/ssl-passthrough: "true"     # Пропускать HTTPS-трафик без расшифровки
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"  # Перенаправлять HTTP -> HTTPS
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: argo-cd.neliub.ru
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: argocd-server
+            port:
+              number: 443  # Порт сервиса ArgoCD (HTTPS)

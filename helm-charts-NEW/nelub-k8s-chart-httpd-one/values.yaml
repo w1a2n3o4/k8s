@@ -1,0 +1,9 @@
+# Default Values for my Helm Chart
+
+container:
+  image: w1a2n3o4/httpd-one:latest
+
+#container:
+#  image: nginx:latest
+
+replicaCount: 3 
