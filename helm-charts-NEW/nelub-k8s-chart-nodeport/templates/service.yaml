@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-nodeport
+  labels:
+    enc: prod
+    owner: neliub_ivan
+spec:
+  selector:
+    project: {{ .Release.Name }} #Selecting PODS with those Labels
+  ports:
+    - name: {{ .Release.Name }}-nodeport
+      protocol: TCP
+      port: 80 #Port on Load Balancer
+      targetPort: 80 #Port on POD
+  #type: ClusterIP # Или LoadBalancer/NodePort, если нужно
+  type: NodePort
