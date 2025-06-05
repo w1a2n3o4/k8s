@@ -11,6 +11,13 @@ spec:
   - host: k8s.neliub.ru
     http:
       paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: http-indgress-main-service-httpd-main  # Основной сервис
+            port:
+              number: 80
       - path: /httpd-one/
         pathType: Prefix
         backend:
